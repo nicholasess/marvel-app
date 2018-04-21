@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import LoadingPage from "../components/loadingpage";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import getMarvelResponse from "../helpers/service";
+import Service from "../helpers/service";
 
 const Header = styled.div`
   width: 100%;
@@ -24,6 +23,11 @@ const Container = styled.div`
   width: 1040px;
   margin: 0 auto;
   margin-top: 30px;
+`;
+
+const ContainerTitle = styled.p`
+  font-size: 18px;
+  margin-bottom: 30px;
 `;
 
 const ItemContainer = styled.div`
@@ -84,7 +88,7 @@ class Home extends Component {
     loading: true
   };
   async componentWillMount() {
-    const comics = await getMarvelResponse("comics");
+    const comics = await Service.get("comics");
 
     this.setState({
       loading: false,
@@ -121,7 +125,8 @@ class Home extends Component {
           <Title>Welcome to the Marvel App</Title>
         </Header>
         <Container>
-          Revistas
+          <ContainerTitle>Revistas</ContainerTitle>
+
           {comics.map((item, index) => (
             <ItemContainer key={item.id}>
               <ItemTitleContainer onClick={() => this.openItem(index)}>

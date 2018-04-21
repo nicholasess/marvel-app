@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
 import LoadingPage from "../components/loadingpage";
-import getMarvelResponse from "../helpers/service";
+import Service from "../helpers/service";
+import { Link } from "react-router-dom";
 import ContainerChar from "../components/containerchar";
 import Tab from "../components/tab";
 const Container = styled.div`
@@ -10,6 +10,7 @@ const Container = styled.div`
   min-height: 600px;
   margin: 0 auto;
   margin-top: 30px;
+  margin-bottom: 100px;
 `;
 
 const BackButton = styled.span`
@@ -23,6 +24,24 @@ const BackButton = styled.span`
 const Tabs = styled.div`
   width: 100%;
   display: flex;
+  border-bottom: 1px solid #7a7a7a;
+`;
+
+const List = styled.ul`
+  padding: 0;
+  a {
+    color: black;
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+`;
+
+const Content = styled.div`
+  width: calc(100% - 20px);
+  padding: 10px;
+  min-height: 300px;
+  background-color: #fff;
 `;
 
 export default class Profile extends Component {
@@ -32,9 +51,8 @@ export default class Profile extends Component {
     activeTab: 1
   };
   async componentWillMount() {
-    const char = await getMarvelResponse(
-      `characters/${this.props.match.params.id}`
-    );
+    const char = await Service.get(`characters/${this.props.match.params.id}`);
+    console.log(char.data.results[0]);
     this.setState({ char: char.data.results[0], loading: false });
   }
 
@@ -74,6 +92,27 @@ export default class Profile extends Component {
             total={char.stories.available}
           />
         </Tabs>
+        {activeTab == 1 ? (
+          <Content>
+            <List>
+              {char.comics.items.map((item, index) => <p>{item.name}</p>)}
+            </List>
+          </Content>
+        ) : null}
+        {activeTab == 2 ? (
+          <Content>
+            <List>
+              {char.series.items.map((item, index) => <p>{item.name}</p>)}
+            </List>
+          </Content>
+        ) : null}
+        {activeTab == 3 ? (
+          <Content>
+            <List>
+              {char.stories.items.map((item, index) => <p>{item.name}</p>)}
+            </List>
+          </Content>
+        ) : null}
       </Container>
     );
   }

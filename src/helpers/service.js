@@ -1,15 +1,17 @@
 import ajax from "@fdaciuk/ajax";
 import CryptoJS from "crypto-js";
-export default async setUrl => {
-  const PUBLIC_KEY = "091d3e74938e9ec1aeb9fc2b34b6dd11";
-  const PRIV_KEY = "207133b1dd33c36ad43785181625d113516a4573";
+import Key from "./key";
 
-  var ts = new Date().getTime();
-  var hash = CryptoJS.MD5(ts + PRIV_KEY + PUBLIC_KEY).toString();
+const request = ajax({ baseUrl: "http://gateway.marvel.com:80/v1/public" });
 
-  var url = `/${setUrl}?apikey=${PUBLIC_KEY}&hash=${hash}&ts=${ts}`;
+const getHash = ts => CryptoJS.MD5(ts + Key.private + Key.public).toString();
+const getTs = () => new Date().getTime();
 
-  var request = ajax({ baseUrl: "http://gateway.marvel.com:80/v1/public" });
+const get = async setUrl => {
+  const ts = getTs();
+  var url = `/${setUrl}?apikey=${Key.public}&hash=${getHash(ts)}&ts=${ts}`;
 
   return request.get(url);
 };
+
+export default { get };
