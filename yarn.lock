@@ -2,9 +2,10 @@
 # yarn lockfile v1
 
 
-"@fdaciuk/ajax@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@fdaciuk/ajax/-/ajax-2.3.0.tgz#de1780cdaffa9733b845403de7035ae4961289d7"
+"@fdaciuk/ajax@^2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@fdaciuk/ajax/-/ajax-2.3.3.tgz#a32322332bac11608621e8038fb54a5f21f5ddb3"
+  integrity sha512-LGIp3yMHC21jQItLDLVuYy/yGUGIN8AbuSxlY2Wb5TfsKOaD2+PjljSgTG5f1Pm8GZGqJzu0ICBIxdzhO9nPBQ==
 
 abab@^1.0.3:
   version "1.0.4"
